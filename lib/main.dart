@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// https://github.com/yagizdo/github-api-app をクリーンアーキテクチャ風に書き換えたもの
 void main() {
   runApp(const MyApp());
 }
