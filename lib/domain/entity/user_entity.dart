@@ -1,0 +1,71 @@
+import 'package:clean_architecture_sample/domain/entity/value/email.dart';
+
+class UserEntity {
+  UserEntity({
+    required this.login,
+    required this.id,
+    required this.nodeId,
+    required this.avatarUrl,
+    required this.gravatarId,
+    required this.url,
+    required this.htmlUrl,
+    required this.followersUrl,
+    required this.followingUrl,
+    required this.gistsUrl,
+    required this.starredUrl,
+    required this.subscriptionsUrl,
+    required this.organizationsUrl,
+    required this.reposUrl,
+    required this.eventsUrl,
+    required this.receivedEventsUrl,
+    required this.type,
+    required this.siteAdmin,
+    required this.name,
+    required this.company,
+    required this.blog,
+    required this.location,
+    required this.email,
+    required this.hireable,
+    required this.bio,
+    required this.twitterUsername,
+    required this.publicRepos,
+    required this.publicGists,
+    required this.followers,
+    required this.following,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  
+  String login;
+  int id;
+  String nodeId;
+  Uri avatarUrl;
+  String? gravatarId;
+  Uri url;
+  Uri htmlUrl;
+  Uri followersUrl;
+  String followingUrl;
+  String gistsUrl;
+  String starredUrl;
+  Uri subscriptionsUrl;
+  Uri organizationsUrl;
+  Uri reposUrl;
+  String eventsUrl;
+  Uri receivedEventsUrl;
+  String type;
+  bool siteAdmin;
+  String? name;
+  String? company;
+  String? blog;
+  String? location;
+  Email? email;
+  bool? hireable;
+  String? bio;
+  String? twitterUsername;
+  int publicRepos;
+  int publicGists;
+  int followers;
+  int following;
+  DateTime createdAt;
+  DateTime updatedAt;
+}
