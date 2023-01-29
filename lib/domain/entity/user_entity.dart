@@ -1,4 +1,4 @@
-import 'package:clean_architecture_sample/domain/entity/value/email.dart';
+import 'package:clean_architecture_sample/utility/class/value/email.dart';
 
 class UserEntity {
   UserEntity({

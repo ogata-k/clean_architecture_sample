@@ -40,6 +40,7 @@ samples, guidance on mobile development, and a full API reference.
   - widget : 基本的なWidgetやカスタムWidgetを実装する箇所。基本的に状態は持たない。状態を持ちたいならコントローラを実装する。
 - utility : どこからでも参照されうるOS非依存の共通の実装。OSに依存したい場合はここでインターフェースを実装してinfraに実装する。
   - class : Result型などの共通で使われるクラスを定義する。
+    - value : 値として使うことを想定した値クラスを定義する。
   - enum : 共通で使われるenumを実装する。 
   - error : 実装時に想定していなかったり回復できないような致命的バグを表すError型を継承したエラーを実装する。
   - exception : 実装時に想定していて回復できる致命的なバグを表すException型を継承したエラーを実装する。
