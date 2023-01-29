@@ -20,6 +20,7 @@ samples, guidance on mobile development, and a full API reference.
 - domain : ビジネスロジックの実装箇所。どこにも依存しない。
   - data : repositoryで利用する各種サービスのインターフェースを配置する。
   - entity : ビジネスロジックで利用するエンティティを実装する。
+  - enum : domainでしか使わないenumを実装する。他から参照されうるならutilityに実装する。
   - event : ビジネスロジックの処理の結果発生したイベントを流す。domain内ではイベントを流すだけで監視しない。
   - interactor : use_caseを組み合わせてアプリケーションロジックを実装した機能サブセットを提供する。組み合わせるuse_caseが一つでも実装する。
   - repository : dataディレクトリ内のインターフェースをもとにエンティティを操作する処理を組み立てるサービスを実装する。
@@ -29,14 +30,16 @@ samples, guidance on mobile development, and a full API reference.
     - \<data source>\ : 取得元の実装箇所。
       - model : 取得元から取得したデータを実装する。
         - mapper : 取得したデータをドメインのエンティティに変換を行う。\<infraのmodel\>Mapperというクラス名で実装する。
+  - enum : infraでしか使わないenumを実装する。
 - presentation : UIに関する実装を行う箇所。
+  - enum : presentationでしか使わないenumを実装する。
   - model : UIで表示するためのモデル。
     - dto : presentation/modelにドメインのエンティティから変換する。\<presentationのmodel\>Dtoというクラス名で実装する。
   - presenter : screenで実装した画面の操作モデルをinteractorを組み合わせて実装する。画面更新を行うためにProviderかStreamの組み合わせで実装する。また、domain/eventのイベント監視も必要なら行う。
   - screen : widgetで実装したWidgetを組み合わせてStatelessWidgetで実装した画面を実装する。画面の操作と状態はpresenterで実装＆保持する。
   - widget : 基本的なWidgetやカスタムWidgetを実装する箇所。基本的に状態は持たない。状態を持ちたいならコントローラを実装する。
 - utility : どこからでも参照されうるOS非依存の共通の実装。OSに依存したい場合はここでインターフェースを実装してinfraに実装する。
-  - class : Result型などの共通で使われるクラスを定義する
-  - enum : UIに関係しないが共通で使われるenumを実装する。 
+  - class : Result型などの共通で使われるクラスを定義する。
+  - enum : 共通で使われるenumを実装する。 
   - error : 実装時に想定していなかったり回復できないような致命的バグを表すError型を継承したエラーを実装する。
   - exception : 実装時に想定していて回復できる致命的なバグを表すException型を継承したエラーを実装する。
