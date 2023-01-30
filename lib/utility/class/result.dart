@@ -123,7 +123,8 @@ class _ResultSuccess<Success extends Object> extends Result<Success> {
 
   @override
   Exception getExceptionOrThrowSuccess() {
-    throw IllegalUseException("Result is Success Value with the value($value). Not Failure.");
+    throw IllegalUseException(
+        "Result is Success Value with the value($value). Not Failure.");
   }
 
   @override
@@ -315,6 +316,10 @@ extension AsyncResultExt<Success extends Object> on AsyncResult<Success> {
     }
   }
 
+  Future<bool> get isSuccess => then((result) => result.isSuccess);
+
+  Future<bool> get isFailure => then((result) => result.isFailure);
+
   Future<Success> getSuccessOrThrow() {
     return then((result) => result.getSuccessOrThrow());
   }
@@ -324,8 +329,9 @@ extension AsyncResultExt<Success extends Object> on AsyncResult<Success> {
   }
 
   Future<Success> getSuccessOrElse(
-      Success Function(Exception error) onFailure) {
-    return then((result) => result.getSuccessOrElse(onFailure));
+      FutureOr<Success> Function(Exception error) onFailure) {
+    return then((result) => result.fold(
+        (success) async => success, (error) async => await onFailure(error)));
   }
 
   Future<Exception> getException() async {

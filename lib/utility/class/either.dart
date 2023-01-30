@@ -97,7 +97,7 @@ abstract class Either<Left extends Object, Right extends Object> {
 }
 
 extension EitherWithFutureLeftExt<Left extends Object, Right extends Object>
-on Either<Future<Left>, Right> {
+    on Either<Future<Left>, Right> {
   Future<Either<Left, Right>> liftUpFutureLeft() async {
     final _either = this;
     if (_either is _EitherLeft<Future<Left>, Right>) {
@@ -178,7 +178,8 @@ class _EitherLeft<Left extends Object, Right extends Object>
 
   @override
   Right getRightOrThrow() {
-    throw IllegalUseException("Either is Left Value with the value($value). Not Right.");
+    throw IllegalUseException(
+        "Either is Left Value with the value($value). Not Right.");
   }
 
   @override
@@ -299,7 +300,8 @@ class _EitherRight<Left extends Object, Right extends Object>
 
   @override
   Left getLeftOrThrow() {
-    throw IllegalUseException("Either is Right Value with the value($value). Not Left.");
+    throw IllegalUseException(
+        "Either is Right Value with the value($value). Not Left.");
   }
 
   @override
@@ -414,6 +416,10 @@ typedef AsyncEither<Left extends Object, Right extends Object>
 
 extension AsyncEitherExt<Left extends Object, Right extends Object>
     on AsyncEither<Left, Right> {
+  Future<bool> get isLeft => then((either) => either.isLeft);
+
+  Future<bool> get isRight => then((either) => either.isRight);
+
   Future<Left> getLeftOrThrow() {
     return then((either) => either.getLeftOrThrow());
   }
