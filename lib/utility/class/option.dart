@@ -29,6 +29,14 @@ abstract class Option<V extends Object> {
     }
   }
 
+  factory Option.fromNullable(V? value) {
+    if (value != null) {
+      return Option.some(value);
+    } else {
+      return Option.none();
+    }
+  }
+
   bool get isSome => this is _OptionSome<V>;
 
   bool get isNone => this is _OptionNone<V>;
@@ -202,6 +210,15 @@ class _OptionNone<V extends Object> extends Option<V> {
 typedef AsyncOption<V extends Object> = Future<Option<V>>;
 
 extension AsyncOptionExt<V extends Object> on AsyncOption<V> {
+  static fromNullable(Future<V?> value) async {
+    final V? _value = await value;
+    if (_value != null) {
+      return Option.some(_value);
+    } else {
+      return Option.none();
+    }
+  }
+
   Future<bool> get isSome => then((option) => option.isSome);
 
   Future<bool> get isNone => then((option) => option.isNone);
@@ -216,13 +233,11 @@ extension AsyncOptionExt<V extends Object> on AsyncOption<V> {
 
   Future<V> getSomeOrElse(FutureOr<V> Function() elseFn) {
     return then(
-        (option) => option.fold((v) async => v, () async => await elseFn()));
+            (option) => option.fold((v) async => v, () async => await elseFn()));
   }
 
-  Future<W> fold<W extends Object>(
-    FutureOr<W> Function(V value) onSome,
-    FutureOr<W> Function() onNone,
-  ) {
+  Future<W> fold<W extends Object>(FutureOr<W> Function(V value) onSome,
+      FutureOr<W> Function() onNone,) {
     return then((option) => option.fold(onSome, onNone));
   }
 
@@ -230,8 +245,7 @@ extension AsyncOptionExt<V extends Object> on AsyncOption<V> {
     return then((option) => option.map(onSome));
   }
 
-  AsyncOption<W> mapAsync<W extends Object>(
-      Future<W> Function(V value) onSome) {
+  AsyncOption<W> mapAsync<W extends Object>(Future<W> Function(V value) onSome) {
     return then((option) =>
         option.map((value) async => await onSome(value)).liftUpFuture());
   }
@@ -240,9 +254,8 @@ extension AsyncOptionExt<V extends Object> on AsyncOption<V> {
     return then((option) => option.flatMap(onSome));
   }
 
-  AsyncOption<W> flatMapAsync<W extends Object>(
-      Future<Option<W>> Function(V value) onSome) {
+  AsyncOption<W> flatMapAsync<W extends Object>(Future<Option<W>> Function(V value) onSome) {
     return then(
-        (option) => option.flatMapAsync((value) async => await onSome(value)));
+            (option) => option.flatMapAsync((value) async => await onSome(value)));
   }
 }
