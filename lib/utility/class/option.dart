@@ -47,12 +47,12 @@ abstract class Option<V extends Object> {
   Option<W> map<W extends Object>(W Function(V value) onSome);
 
   Future<Option<W>> mapAsync<W extends Object>(
-      FutureOr<W> Function(V value) onSome);
+      Future<W> Function(V value) onSome);
 
   Option<W> flatMap<W extends Object>(Option<W> Function(V value) onSome);
 
   Future<Option<W>> flatMapAsync<W extends Object>(
-      FutureOr<Option<W>> Function(V value) onSome);
+      Future<Option<W>> Function(V value) onSome);
 
   AsyncOption<V> asAsync() {
     return Future.value(this);
@@ -122,7 +122,7 @@ class _OptionSome<V extends Object> extends Option<V> {
 
   @override
   Future<Option<W>> mapAsync<W extends Object>(
-      FutureOr<W> Function(V value) onSome) async {
+      Future<W> Function(V value) onSome) async {
     return Option.some(await onSome(value));
   }
 
@@ -133,7 +133,7 @@ class _OptionSome<V extends Object> extends Option<V> {
 
   @override
   Future<Option<W>> flatMapAsync<W extends Object>(
-      FutureOr<Option<W>> Function(V value) onSome) async {
+      Future<Option<W>> Function(V value) onSome) async {
     return await onSome(value);
   }
 }
@@ -183,7 +183,7 @@ class _OptionNone<V extends Object> extends Option<V> {
 
   @override
   Future<Option<W>> mapAsync<W extends Object>(
-      FutureOr<W> Function(V value) onSome) async {
+      Future<W> Function(V value) onSome) async {
     return Option.none();
   }
 
@@ -194,7 +194,7 @@ class _OptionNone<V extends Object> extends Option<V> {
 
   @override
   Future<Option<W>> flatMapAsync<W extends Object>(
-      FutureOr<Option<W>> Function(V value) onSome) async {
+      Future<Option<W>> Function(V value) onSome) async {
     return Option.none();
   }
 }
@@ -231,7 +231,7 @@ extension AsyncOptionExt<V extends Object> on AsyncOption<V> {
   }
 
   AsyncOption<W> mapAsync<W extends Object>(
-      FutureOr<W> Function(V value) onSome) {
+      Future<W> Function(V value) onSome) {
     return then((option) =>
         option.map((value) async => await onSome(value)).liftUpFuture());
   }
@@ -241,7 +241,7 @@ extension AsyncOptionExt<V extends Object> on AsyncOption<V> {
   }
 
   AsyncOption<W> flatMapAsync<W extends Object>(
-      FutureOr<Option<W>> Function(V value) onSome) {
+      Future<Option<W>> Function(V value) onSome) {
     return then(
         (option) => option.flatMapAsync((value) async => await onSome(value)));
   }

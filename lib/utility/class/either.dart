@@ -57,14 +57,14 @@ abstract class Either<Left extends Object, Right extends Object> {
   );
 
   Future<Either<L, Right>> mapLeftAsync<L extends Object>(
-      FutureOr<L> Function(Left value) onLeft);
+      Future<L> Function(Left value) onLeft);
 
   Future<Either<Left, R>> mapRightAsync<R extends Object>(
-      FutureOr<R> Function(Right value) onRight);
+      Future<R> Function(Right value) onRight);
 
   Future<Either<L, R>> applyAsync<L extends Object, R extends Object>(
-    FutureOr<L> Function(Left value) onLeft,
-    FutureOr<R> Function(Right value) onRight,
+    Future<L> Function(Left value) onLeft,
+    Future<R> Function(Right value) onRight,
   );
 
   Either<L, Right> flatMapLeft<L extends Object>(
@@ -79,14 +79,14 @@ abstract class Either<Left extends Object, Right extends Object> {
   );
 
   Future<Either<L, Right>> flatMapLeftAsync<L extends Object>(
-      FutureOr<Either<L, Right>> Function(Left value) onLeft);
+      Future<Either<L, Right>> Function(Left value) onLeft);
 
   Future<Either<Left, R>> flatMapRightAsync<R extends Object>(
-      FutureOr<Either<Left, R>> Function(Right value) onRight);
+      Future<Either<Left, R>> Function(Right value) onRight);
 
   Future<Either<L, R>> applyFlatMapAsync<L extends Object, R extends Object>(
-    FutureOr<Either<L, R>> Function(Left value) onLeft,
-    FutureOr<Either<L, R>> Function(Right value) onRight,
+    Future<Either<L, R>> Function(Left value) onLeft,
+    Future<Either<L, R>> Function(Right value) onRight,
   );
 
   Either<Right, Left> swap();
@@ -215,20 +215,20 @@ class _EitherLeft<Left extends Object, Right extends Object>
 
   @override
   Future<Either<L, Right>> mapLeftAsync<L extends Object>(
-      FutureOr<L> Function(Left value) onLeft) async {
+      Future<L> Function(Left value) onLeft) async {
     return Either.left(await onLeft(value));
   }
 
   @override
   Future<Either<Left, R>> mapRightAsync<R extends Object>(
-      FutureOr<R> Function(Right value) onRight) async {
+      Future<R> Function(Right value) onRight) async {
     return Either.left(value);
   }
 
   @override
   Future<Either<L, R>> applyAsync<L extends Object, R extends Object>(
-    FutureOr<L> Function(Left value) onLeft,
-    FutureOr<R> Function(Right value) onRight,
+    Future<L> Function(Left value) onLeft,
+    Future<R> Function(Right value) onRight,
   ) async {
     return Either.left(await onLeft(value));
   }
@@ -255,20 +255,20 @@ class _EitherLeft<Left extends Object, Right extends Object>
 
   @override
   Future<Either<L, Right>> flatMapLeftAsync<L extends Object>(
-      FutureOr<Either<L, Right>> Function(Left value) onLeft) async {
+      Future<Either<L, Right>> Function(Left value) onLeft) async {
     return await onLeft(value);
   }
 
   @override
   Future<Either<Left, R>> flatMapRightAsync<R extends Object>(
-      FutureOr<Either<Left, R>> Function(Right value) onRight) async {
+      Future<Either<Left, R>> Function(Right value) onRight) async {
     return Either.left(value);
   }
 
   @override
   Future<Either<L, R>> applyFlatMapAsync<L extends Object, R extends Object>(
-    FutureOr<Either<L, R>> Function(Left value) onLeft,
-    FutureOr<Either<L, R>> Function(Right value) onRight,
+    Future<Either<L, R>> Function(Left value) onLeft,
+    Future<Either<L, R>> Function(Right value) onRight,
   ) async {
     return await onLeft(value);
   }
@@ -347,20 +347,20 @@ class _EitherRight<Left extends Object, Right extends Object>
 
   @override
   Future<Either<L, Right>> mapLeftAsync<L extends Object>(
-      FutureOr<L> Function(Left value) onLeft) async {
+      Future<L> Function(Left value) onLeft) async {
     return Either.right(value);
   }
 
   @override
   Future<Either<Left, R>> mapRightAsync<R extends Object>(
-      FutureOr<R> Function(Right value) onRight) async {
+      Future<R> Function(Right value) onRight) async {
     return Either.right(await onRight(value));
   }
 
   @override
   Future<Either<L, R>> applyAsync<L extends Object, R extends Object>(
-    FutureOr<L> Function(Left value) onLeft,
-    FutureOr<R> Function(Right value) onRight,
+    Future<L> Function(Left value) onLeft,
+    Future<R> Function(Right value) onRight,
   ) async {
     return Either.right(await onRight(value));
   }
@@ -387,20 +387,20 @@ class _EitherRight<Left extends Object, Right extends Object>
 
   @override
   Future<Either<L, Right>> flatMapLeftAsync<L extends Object>(
-      FutureOr<Either<L, Right>> Function(Left value) onLeft) async {
+      Future<Either<L, Right>> Function(Left value) onLeft) async {
     return Either.right(value);
   }
 
   @override
   Future<Either<Left, R>> flatMapRightAsync<R extends Object>(
-      FutureOr<Either<Left, R>> Function(Right value) onRight) async {
+      Future<Either<Left, R>> Function(Right value) onRight) async {
     return onRight(value);
   }
 
   @override
   Future<Either<L, R>> applyFlatMapAsync<L extends Object, R extends Object>(
-    FutureOr<Either<L, R>> Function(Left value) onLeft,
-    FutureOr<Either<L, R>> Function(Right value) onRight,
+    Future<Either<L, R>> Function(Left value) onLeft,
+    Future<Either<L, R>> Function(Right value) onRight,
   ) async {
     return await onRight(value);
   }
@@ -461,18 +461,18 @@ extension AsyncEitherExt<Left extends Object, Right extends Object>
   }
 
   AsyncEither<L, Right> mapLeftAsync<L extends Object>(
-      FutureOr<L> Function(Left value) onLeft) {
+      Future<L> Function(Left value) onLeft) {
     return then((either) => either.mapLeftAsync(onLeft));
   }
 
   AsyncEither<Left, R> mapRightAsync<R extends Object>(
-      FutureOr<R> Function(Right value) onRight) {
+      Future<R> Function(Right value) onRight) {
     return then((either) => either.mapRightAsync(onRight));
   }
 
   AsyncEither<L, R> applyAsync<L extends Object, R extends Object>(
-    FutureOr<L> Function(Left value) onLeft,
-    FutureOr<R> Function(Right value) onRight,
+    Future<L> Function(Left value) onLeft,
+    Future<R> Function(Right value) onRight,
   ) {
     return then((either) => either.applyAsync(onLeft, onRight));
   }
@@ -495,7 +495,7 @@ extension AsyncEitherExt<Left extends Object, Right extends Object>
   }
 
   AsyncEither<L, Right> flatMapLeftAsync<L extends Object>(
-      FutureOr<Either<L, Right>> Function(Left value) onLeft) {
+      Future<Either<L, Right>> Function(Left value) onLeft) {
     return then((either) => either.fold(
           (value) async => await onLeft(value),
           (value) async => Either.right(value),
@@ -503,7 +503,7 @@ extension AsyncEitherExt<Left extends Object, Right extends Object>
   }
 
   AsyncEither<Left, R> flatMapRightAsync<R extends Object>(
-      FutureOr<Either<Left, R>> Function(Right value) onRight) {
+      Future<Either<Left, R>> Function(Right value) onRight) {
     return then((either) => either.fold(
           (value) async => Either.left(value),
           (value) async => await onRight(value),
@@ -511,8 +511,8 @@ extension AsyncEitherExt<Left extends Object, Right extends Object>
   }
 
   AsyncEither<L, R> applyFlatMapAsync<L extends Object, R extends Object>(
-    FutureOr<Either<L, R>> Function(Right value) onRight,
-    FutureOr<Either<L, R>> Function(Left value) onLeft,
+    Future<Either<L, R>> Function(Right value) onRight,
+    Future<Either<L, R>> Function(Left value) onLeft,
   ) {
     return then((either) => either.fold(
           (value) async => await onLeft(value),

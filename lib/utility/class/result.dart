@@ -44,10 +44,10 @@ abstract class Result<Success extends Object> {
       V Function(Success success) onSuccess);
 
   Future<Result<V>> mapAsync<V extends Object>(
-      FutureOr<V> Function(Success success) onSuccess);
+      Future<V> Function(Success success) onSuccess);
 
   Future<Result<V>> mapWithCatchAsync<V extends Object>(
-      FutureOr<V> Function(Success success) onSuccess);
+      Future<V> Function(Success success) onSuccess);
 
   Result<V> flatMap<V extends Object>(
       Result<V> Function(Success success) onSuccess);
@@ -56,10 +56,10 @@ abstract class Result<Success extends Object> {
       Result<V> Function(Success success) onSuccess);
 
   Future<Result<V>> flatMapAsync<V extends Object>(
-      FutureOr<Result<V>> Function(Success success) onSuccess);
+      Future<Result<V>> Function(Success success) onSuccess);
 
   Future<Result<V>> flatMapWithCatchAsync<V extends Object>(
-      FutureOr<Result<V>> Function(Success success) onSuccess);
+      Future<Result<V>> Function(Success success) onSuccess);
 
   AsyncResult<Success> asAsync() {
     return Future.value(this);
@@ -155,13 +155,13 @@ class _ResultSuccess<Success extends Object> extends Result<Success> {
 
   @override
   Future<Result<V>> mapAsync<V extends Object>(
-      FutureOr<V> Function(Success success) onSuccess) async {
+      Future<V> Function(Success success) onSuccess) async {
     return Result.success(await onSuccess(value));
   }
 
   @override
   Future<Result<V>> mapWithCatchAsync<V extends Object>(
-      FutureOr<V> Function(Success success) onSuccess) async {
+      Future<V> Function(Success success) onSuccess) async {
     try {
       return Result.success(await onSuccess(value));
     } on Exception catch (error) {
@@ -187,13 +187,13 @@ class _ResultSuccess<Success extends Object> extends Result<Success> {
 
   @override
   Future<Result<V>> flatMapAsync<V extends Object>(
-      FutureOr<Result<V>> Function(Success success) onSuccess) async {
+      Future<Result<V>> Function(Success success) onSuccess) async {
     return await onSuccess(value);
   }
 
   @override
   Future<Result<V>> flatMapWithCatchAsync<V extends Object>(
-      FutureOr<Result<V>> Function(Success success) onSuccess) async {
+      Future<Result<V>> Function(Success success) onSuccess) async {
     try {
       return await onSuccess(value);
     } on Exception catch (error) {
@@ -269,13 +269,13 @@ class _ResultFailure<Success extends Object> extends Result<Success> {
 
   @override
   Future<Result<V>> mapAsync<V extends Object>(
-      FutureOr<V> Function(Success success) onSuccess) async {
+      Future<V> Function(Success success) onSuccess) async {
     return Result.failure(error);
   }
 
   @override
   Future<Result<V>> mapWithCatchAsync<V extends Object>(
-      FutureOr<V> Function(Success success) onSuccess) async {
+      Future<V> Function(Success success) onSuccess) async {
     return Result.failure(error);
   }
 
@@ -293,13 +293,13 @@ class _ResultFailure<Success extends Object> extends Result<Success> {
 
   @override
   Future<Result<V>> flatMapAsync<V extends Object>(
-      FutureOr<Result<V>> Function(Success success) onSuccess) async {
+      Future<Result<V>> Function(Success success) onSuccess) async {
     return Result.failure(error);
   }
 
   @override
   Future<Result<V>> flatMapWithCatchAsync<V extends Object>(
-      FutureOr<Result<V>> Function(Success success) onSuccess) async {
+      Future<Result<V>> Function(Success success) onSuccess) async {
     return Result.failure(error);
   }
 }
@@ -363,12 +363,12 @@ extension AsyncResultExt<Success extends Object> on AsyncResult<Success> {
   }
 
   AsyncResult<V> mapAsync<V extends Object>(
-      FutureOr<V> Function(Success success) onSuccess) {
+      Future<V> Function(Success success) onSuccess) {
     return then((result) => result.mapAsync(onSuccess));
   }
 
   AsyncResult<V> mapWithCatchAsync<V extends Object>(
-      FutureOr<V> Function(Success success) onSuccess) {
+      Future<V> Function(Success success) onSuccess) {
     return then((result) => result.mapWithCatchAsync(onSuccess));
   }
 
@@ -383,12 +383,12 @@ extension AsyncResultExt<Success extends Object> on AsyncResult<Success> {
   }
 
   AsyncResult<V> flatMapAsync<V extends Object>(
-      FutureOr<Result<V>> Function(Success success) onSuccess) {
+      Future<Result<V>> Function(Success success) onSuccess) {
     return then((result) => result.flatMapAsync(onSuccess));
   }
 
   AsyncResult<V> flatMapWithCatchAsync<V extends Object>(
-      FutureOr<Result<V>> Function(Success success) onSuccess) {
+      Future<Result<V>> Function(Success success) onSuccess) {
     return then((result) => result.flatMapWithCatchAsync(onSuccess));
   }
 }
