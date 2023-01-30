@@ -27,7 +27,7 @@ samples, guidance on mobile development, and a full API reference.
   - use_case : 一つの関心ごとを行うための呼び出し口となるユースケースをrepositoryを組み合わせて実装する。一つの関心ごとが対象なので、各クラスのメソッドは一つだけ。
 - infra : OSに依存する実際の実装を配置する箇所。
   - data : domain/dataのインターフェースを実装する箇所。これ以外はinfra下に作る。
-    - \<data source>\ : 取得元の実装箇所。
+    - \<data source\> : 取得元の実装箇所。
       - model : 取得元から取得したデータを実装する。
         - mapper : 取得したデータをドメインのエンティティに変換を行う。\<infraのmodel\>Mapperというクラス名で実装する。
   - enum : infraでしか使わないenumを実装する。
