@@ -1,7 +1,7 @@
 import 'package:clean_architecture_sample/utility/class/value/email.dart';
 
-class UserEntity {
-  UserEntity({
+class UserModel {
+  UserModel({
     required this.login,
     required this.id,
     required this.avatarUrl,

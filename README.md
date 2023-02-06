@@ -22,7 +22,6 @@ samples, guidance on mobile development, and a full API reference.
   - entity : ビジネスロジックで利用するエンティティを実装する。
   - enum : domainでしか使わないenumを実装する。他から参照されうるならutilityに実装する。
   - event : ビジネスロジックの処理の結果発生したイベントを流す。domain内ではイベントを流すだけで監視しない。
-  - interactor : use_caseを組み合わせてアプリケーションロジックを実装した機能サブセットを提供する。組み合わせるuse_caseが一つでも実装する。
   - repository : dataディレクトリ内のインターフェースをもとにエンティティを操作する処理を組み立てるサービスを実装する。
   - use_case : 一つの関心ごとを行うための呼び出し口となるユースケースをrepositoryを組み合わせて実装する。一つの関心ごとが対象なので、各クラスのメソッドは一つだけ。
 - infra : OSに依存する実際の実装を配置する箇所。
@@ -33,8 +32,9 @@ samples, guidance on mobile development, and a full API reference.
   - enum : infraでしか使わないenumを実装する。
 - presentation : UIに関する実装を行う箇所。
   - enum : presentationでしか使わないenumを実装する。
+  - interactor : use_caseを組み合わせてアプリケーションロジックを実装した機能サブセットを提供する。組み合わせるuse_caseが一つでも実装する。
   - model : UIで表示するためのモデル。
-    - dto : presentation/modelにドメインのエンティティから変換する。\<presentationのmodel\>Dtoというクラス名で実装する。
+      - dto : presentation/modelにドメインのエンティティから変換する。\<presentationのmodel\>Dtoというクラス名で実装する。
   - presenter : screenで実装した画面の操作モデルをinteractorを組み合わせて実装する。画面更新を行うためにProviderかStreamの組み合わせで実装する。また、domain/eventのイベント監視も必要なら行う。
   - screen : widgetで実装したWidgetを組み合わせてStatelessWidgetで実装した画面を実装する。画面の操作と状態はpresenterで実装＆保持する。
   - widget : 基本的なWidgetやカスタムWidgetを実装する箇所。基本的に状態は持たない。状態を持ちたいならコントローラを実装する。
