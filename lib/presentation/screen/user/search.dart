@@ -4,8 +4,6 @@ import 'package:clean_architecture_sample/presentation/widget/common/sorry.dart'
 import 'package:clean_architecture_sample/presentation/widget/user/user_page.dart';
 import 'package:clean_architecture_sample/utility/class/option.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
@@ -94,7 +92,7 @@ class UserSearch extends ConsumerWidget {
             content: Text(errorMessage),
             actions: <Widget>[
               // ボタン領域
-              FlatButton(
+              TextButton(
                 child: Text("close"),
                 onPressed: () => Navigator.pop(context),
               ),
