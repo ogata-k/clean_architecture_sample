@@ -76,7 +76,7 @@ class Info extends StatelessWidget {
               child: Row(
                 children: [
                   SvgPicture.asset(
-                    'lib/asset/icon/twittericon.svg',
+                    'asset/icon/twittericon.svg',
                     color: Colors.white38,
                     width: 25,
                   ),

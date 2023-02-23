@@ -59,10 +59,6 @@ abstract class Option<V> {
   Option<W> flatMap<W>(Option<W> Function(V value) onSome);
 
   Future<Option<W>> flatMapAsync<W>(Future<Option<W>> Function(V value) onSome);
-
-  AsyncOption<V> asAsync() {
-    return Future.value(this);
-  }
 }
 
 extension OptionWithFutureExt<V> on Option<Future<V>> {
@@ -200,60 +196,5 @@ class _OptionNone<V> extends Option<V> {
   Future<Option<W>> flatMapAsync<W>(
       Future<Option<W>> Function(V value) onSome) async {
     return Option.none();
-  }
-}
-
-typedef AsyncOption<V> = Future<Option<V>>;
-
-extension AsyncOptionExt<V> on AsyncOption<V> {
-  static fromNullable(Future<V?> value) async {
-    final V? _value = await value;
-    if (_value != null) {
-      return Option.some(_value);
-    } else {
-      return Option.none();
-    }
-  }
-
-  Future<bool> get isSome => then((option) => option.isSome);
-
-  Future<bool> get isNone => then((option) => option.isNone);
-
-  Future<V> getSomeOrThrow() {
-    return then((option) => option.getSomeOrThrow());
-  }
-
-  Future<V?> getSomeOrNull() {
-    return then((option) => option.getSomeOrNull());
-  }
-
-  Future<V> getSomeOrElse(FutureOr<V> Function() elseFn) {
-    return then(
-            (option) => option.fold((v) async => v, () async => await elseFn()));
-  }
-
-  Future<W> fold<W>(
-    FutureOr<W> Function(V value) onSome,
-    FutureOr<W> Function() onNone,
-  ) {
-    return then((option) => option.fold(onSome, onNone));
-  }
-
-  AsyncOption<W> map<W>(W Function(V value) onSome) {
-    return then((option) => option.map(onSome));
-  }
-
-  AsyncOption<W> mapAsync<W>(Future<W> Function(V value) onSome) {
-    return then((option) =>
-        option.map((value) async => await onSome(value)).liftUpFuture());
-  }
-
-  AsyncOption<W> flatMap<W>(Option<W> Function(V value) onSome) {
-    return then((option) => option.flatMap(onSome));
-  }
-
-  AsyncOption<W> flatMapAsync<W>(Future<Option<W>> Function(V value) onSome) {
-    return then(
-        (option) => option.flatMapAsync((value) async => await onSome(value)));
   }
 }

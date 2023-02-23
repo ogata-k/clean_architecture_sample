@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final searchUserPresenter =
-    ChangeNotifierProvider.autoDispose((ProviderReference ref) {
+    ChangeNotifierProvider.autoDispose((ref) {
   final _presenter = SearchUserPresenter();
   ref.onDispose(() {
     _presenter.dispose();
@@ -82,6 +82,7 @@ class SearchUserPresenter extends BasePresenter {
 
   void setSearchModeAndNotify() {
     isSearching = true;
+    notifyListeners();
   }
 
   void _unsetSearchMode() {

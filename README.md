@@ -1,6 +1,6 @@
 # clean_architecture_sample
 
-A sample of clean architecture.
+A sample of clean architecture for flutter v3.7.5.
 
 ## Getting Started
 

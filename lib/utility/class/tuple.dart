@@ -55,33 +55,6 @@ extension PairWithFutureExt<T1, T2, T3> on Pair<Future<T1>, Future<T2>> {
   }
 }
 
-typedef AsyncPair<T1, T2> = Future<Pair<T1, T2>>;
-
-extension AsyncPairExt<T1, T2> on Future<Pair<T1, T2>> {
-  Future<T1> get item1 => then((pair) => pair.item1);
-
-  Future<T2> get item2 => then((pair) => pair.item2);
-
-  AsyncPair<P1, T2> withItem1<P1>(P1 v) => then((pair) => pair.withItem1(v));
-
-  AsyncPair<T1, P2> withItem2<P2>(P2 v) => then((pair) => pair.withItem2(v));
-
-  AsyncPair<P1, T2> mapItem1<P1>(P1 Function(T1 v) fn) =>
-      then((pair) => pair.mapItem1(fn));
-
-  AsyncPair<T1, P2> mapItem2<P2>(P2 Function(T2 v) fn) =>
-      then((pair) => pair.mapItem2(fn));
-
-  AsyncPair<P1, T2> mapItem1Async<P1>(Future<P1> Function(T1 v) fn) =>
-      then((pair) => pair.mapItem1Async(fn));
-
-  AsyncPair<T1, P2> mapItem2Async<P2>(Future<P2> Function(T2 v) fn) =>
-      then((pair) => pair.mapItem2Async(fn));
-
-  Future<List<dynamic>> toList({bool growable = false}) =>
-      then((pair) => pair.toList(growable: growable));
-}
-
 class Triple<T1, T2, T3> {
   final T1 item1;
 
@@ -163,47 +136,4 @@ extension TripleWithFutureExt<T1, T2, T3>
   Future<Triple<T1, T2, T3>> liftUpFuture3() async {
     return Triple(await item1, await item2, await item3);
   }
-}
-
-typedef AsyncTriple<T1, T2, T3> = Future<Triple<T1, T2, T3>>;
-
-extension AsyncTripleExt<T1, T2, T3> on Future<Triple<T1, T2, T3>> {
-  Future<T1> get item1 => then((triple) => triple.item1);
-
-  Future<T2> get item2 => then((triple) => triple.item2);
-
-  Future<T3> get item3 => then((triple) => triple.item3);
-
-  AsyncTriple<P1, T2, T3> withItem1<P1>(P1 v) =>
-      then((triple) => triple.withItem1(v));
-
-  AsyncTriple<T1, P2, T3> withItem2<P2>(P2 v) =>
-      then((triple) => triple.withItem2(v));
-
-  AsyncTriple<T1, T2, P3> withItem3<P3>(P3 v) =>
-      then((triple) => triple.withItem3(v));
-
-  AsyncTriple<P1, T2, T3> mapItem1<P1>(P1 Function(T1 v) fn) =>
-      then((triple) => triple.mapItem1(fn));
-
-  AsyncTriple<T1, P2, T3> mapItem2<P2>(P2 Function(T2 v) fn) =>
-      then((triple) => triple.mapItem2(fn));
-
-  AsyncTriple<T1, T2, P3> mapItem3<P3>(P3 Function(T3 v) fn) =>
-      then((triple) => triple.mapItem3(fn));
-
-  AsyncTriple<P1, T2, T3> mapItem1Async<P1>(
-          Future<P1> Function(T1 v) fn) async =>
-      then((triple) => triple.mapItem1Async(fn));
-
-  AsyncTriple<T1, P2, T3> mapItem2Async<P2>(
-          Future<P2> Function(T2 v) fn) async =>
-      then((triple) => triple.mapItem2Async(fn));
-
-  AsyncTriple<T1, T2, P3> mapItem3Async<P3>(
-          Future<P3> Function(T3 v) fn) async =>
-      then((triple) => triple.mapItem3Async(fn));
-
-  Future<List<dynamic>> toList({bool growable = false}) =>
-      then((triple) => triple.toList());
 }

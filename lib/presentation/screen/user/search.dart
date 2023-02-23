@@ -11,10 +11,11 @@ class UserSearch extends ConsumerWidget {
   const UserSearch({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final SearchUserPresenter _presenter = watch(searchUserPresenter);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final SearchUserPresenter _presenter = ref.watch(searchUserPresenter);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: _presenter.isSearching
           ? AppBar(
               // The search area here
@@ -26,56 +27,56 @@ class UserSearch extends ConsumerWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(5)),
                 child: Center(
-                  child: TextField(
-                    controller: _presenter.searchWordController,
-                    decoration: InputDecoration(
-                        prefixIcon: IconButton(
-                          icon: const Icon(Icons.search),
-                          onPressed: _presenter.canSearchUser
-                              ? null
-                              : () {
-                                  _presenter.searchUserByName();
-                                },
-                        ),
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.clear),
-                          onPressed: _presenter.clearInputWord,
-                        ),
-                        hintText: 'Search...',
-                        border: InputBorder.none),
-                  ),
-                ),
-              ))
+              child: TextField(
+                controller: _presenter.searchWordController,
+                decoration: InputDecoration(
+                    prefixIcon: IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: _presenter.canSearchUser
+                          ? null
+                          : () {
+                        _presenter.searchUserByName();
+                      },
+                    ),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: _presenter.clearInputWord,
+                    ),
+                    hintText: 'Search...',
+                    border: InputBorder.none),
+              ),
+            ),
+          ))
           : AppBar(
-              backgroundColor: Colors.black,
-              title: const Text('Search User'),
-              actions: [
-                  IconButton(
-                      onPressed: _presenter.setSearchModeAndNotify,
-                      icon: const Icon(Icons.search))
-                ]),
+          backgroundColor: Colors.black,
+          title: const Text('Search User'),
+          actions: [
+            IconButton(
+                onPressed: _presenter.setSearchModeAndNotify,
+                icon: const Icon(Icons.search))
+          ]),
       body: _presenter.isLoading
           ? Container(
-              alignment: Alignment.center,
-              color: Colors.black,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 300,
-                    height: 300,
-                    child: LiquidCircularProgressIndicator(
-                      value: 0.7,
-                      center: const Text(
-                        'Loading..',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                      backgroundColor: Colors.white,
-                    ),
-                  )
-                ],
+        alignment: Alignment.center,
+        color: Colors.black,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 300,
+              height: 300,
+              child: LiquidCircularProgressIndicator(
+                value: 0.7,
+                center: const Text(
+                  'Loading..',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                backgroundColor: Colors.white,
               ),
             )
+          ],
+        ),
+      )
           : _setSearchResultContent(context, _presenter),
     );
   }
@@ -92,7 +93,7 @@ class UserSearch extends ConsumerWidget {
             content: Text(errorMessage),
             actions: <Widget>[
               // ボタン領域
-              FlatButton(
+              TextButton(
                 child: Text("close"),
                 onPressed: () => Navigator.pop(context),
               ),

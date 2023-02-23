@@ -82,10 +82,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_riverpod
-      sha256: f757ad3b5bec00303072d605fc8a595994467c2e0821a2996b56515678a9c215
+      sha256: "46a27b7a11dc13738054093076f2dc65692ddcd463979b15092accf5681aea20"
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.4"
+    version: "2.2.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -99,14 +99,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  freezed_annotation:
-    dependency: transitive
-    description:
-      name: freezed_annotation
-      sha256: "02d17a242f724828a7c820921dbe92c66fe685d6bef3d7450dc556fa79e033ce"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.15.0"
   get_it:
     dependency: "direct main"
     description:
@@ -131,14 +123,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.5"
-  json_annotation:
-    dependency: transitive
-    description:
-      name: json_annotation
-      sha256: cb314f00b2488de7bc575207e54402cd2f92363f333a7933fd1b0631af226baa
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.6.0"
   lints:
     dependency: transitive
     description:
@@ -207,18 +191,18 @@ packages:
     dependency: transitive
     description:
       name: petitparser
-      sha256: "1a914995d4ef10c94ff183528c120d35ed43b5eaa8713fc6766a9be4570782e2"
+      sha256: "49392a45ced973e8d94a85fdb21293fbb40ba805fc49f2965101ae748a3683b4"
       url: "https://pub.dev"
     source: hosted
-    version: "4.4.0"
+    version: "5.1.0"
   riverpod:
     dependency: transitive
     description:
       name: riverpod
-      sha256: "69e074077fa57b5b35628f7663af66408f57b765beb423d880d6858a8a33e85c"
+      sha256: "59a48de9c757aa61aa28e9fd625ffb360d43b6b54606f12536622c55be9e8c4b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.4"
+    version: "2.2.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -284,10 +268,10 @@ packages:
     dependency: transitive
     description:
       name: typed_data
-      sha256: "53bdf7e979cfbf3e28987552fd72f637e63f3c8724c9e56d9246942dc2fa36ee"
+      sha256: "26f87ade979c47a150c9eaab93ccd2bebe70a27dc0b4b29517f2904f04eb11a5"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.0"
+    version: "1.3.1"
   vector_math:
     dependency: transitive
     description:
@@ -300,10 +284,10 @@ packages:
     dependency: transitive
     description:
       name: xml
-      sha256: baa23bcba1ba4ce4b22c0c7a1d9c861e7015cb5169512676da0b85138e72840c
+      sha256: "80d494c09849dc3f899d227a78c30c5b949b985ededf884cb3f3bcd39f4b447a"
       url: "https://pub.dev"
     source: hosted
-    version: "5.3.1"
+    version: "5.4.1"
 sdks:
   dart: ">=2.18.0 <3.0.0"
-  flutter: ">=2.4.0-0.0.pre"
+  flutter: ">=3.0.0"

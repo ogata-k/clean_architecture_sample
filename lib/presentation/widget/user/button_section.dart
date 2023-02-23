@@ -14,7 +14,7 @@ class BottomSection extends StatelessWidget {
       child: Row(
         children: [
           SvgPicture.asset(
-            'lib/asset/icon/repoicon.svg',
+            'asset/icon/repoicon.svg',
             color: Colors.amber,
             width: 40,
           ),

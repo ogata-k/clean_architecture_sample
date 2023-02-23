@@ -89,10 +89,6 @@ abstract class Either<Left, Right> {
   );
 
   Either<Right, Left> swap();
-
-  AsyncEither<Left, Right> asAsync() {
-    return Future.value(this);
-  }
 }
 
 extension EitherWithFutureLeftExt<Left, Right> on Either<Future<Left>, Right> {
@@ -403,114 +399,5 @@ class _EitherRight<Left, Right> extends Either<Left, Right> {
   @override
   Either<Right, Left> swap() {
     return Either.left(value);
-  }
-}
-
-typedef AsyncEither<Left, Right> = Future<Either<Left, Right>>;
-
-extension AsyncEitherExt<Left, Right> on AsyncEither<Left, Right> {
-  Future<bool> get isLeft => then((either) => either.isLeft);
-
-  Future<bool> get isRight => then((either) => either.isRight);
-
-  Future<Left> getLeftOrThrow() {
-    return then((either) => either.getLeftOrThrow());
-  }
-
-  Future<Left?> getLeftOrNull() {
-    return then((either) => either.getLeftOrNull());
-  }
-
-  Future<Right> getRightOrThrow() {
-    return then((either) => either.getRightOrThrow());
-  }
-
-  Future<Right?> getRightOrNull() {
-    return then((either) => either.getRightOrNull());
-  }
-
-  Future<V> fold<V>(
-    V Function(Left value) onLeft,
-    V Function(Right value) onRight,
-  ) {
-    return then((either) => either.fold(onLeft, onRight));
-  }
-
-  AsyncEither<L, Right> mapLeft<L>(L Function(Left value) onLeft) {
-    return then((either) => either.mapLeft(onLeft));
-  }
-
-  AsyncEither<Left, R> mapRight<R>(R Function(Right value) onRight) {
-    return then((either) => either.mapRight(onRight));
-  }
-
-  AsyncEither<L, R> apply<L, R>(
-    L Function(Left value) onLeft,
-    R Function(Right value) onRight,
-  ) {
-    return then((either) => either.apply(onLeft, onRight));
-  }
-
-  AsyncEither<L, Right> mapLeftAsync<L>(Future<L> Function(Left value) onLeft) {
-    return then((either) => either.mapLeftAsync(onLeft));
-  }
-
-  AsyncEither<Left, R> mapRightAsync<R>(
-      Future<R> Function(Right value) onRight) {
-    return then((either) => either.mapRightAsync(onRight));
-  }
-
-  AsyncEither<L, R> applyAsync<L, R>(
-    Future<L> Function(Left value) onLeft,
-    Future<R> Function(Right value) onRight,
-  ) {
-    return then((either) => either.applyAsync(onLeft, onRight));
-  }
-
-  AsyncEither<L, Right> flatMapLeft<L>(
-      Either<L, Right> Function(Left value) onLeft) {
-    return then((either) => either.fold(onLeft, Either.right));
-  }
-
-  AsyncEither<Left, R> flatMapRight<R>(
-      Either<Left, R> Function(Right value) onRight) {
-    return then((either) => either.fold(Either.left, onRight));
-  }
-
-  AsyncEither<L, R> applyFlatMap<L, R>(
-    Either<L, R> Function(Left value) onLeft,
-    Either<L, R> Function(Right value) onRight,
-  ) {
-    return then((either) => either.fold(onLeft, onRight));
-  }
-
-  AsyncEither<L, Right> flatMapLeftAsync<L>(
-      Future<Either<L, Right>> Function(Left value) onLeft) {
-    return then((either) => either.fold(
-          (value) async => await onLeft(value),
-          (value) async => Either.right(value),
-        ));
-  }
-
-  AsyncEither<Left, R> flatMapRightAsync<R>(
-      Future<Either<Left, R>> Function(Right value) onRight) {
-    return then((either) => either.fold(
-          (value) async => Either.left(value),
-          (value) async => await onRight(value),
-        ));
-  }
-
-  AsyncEither<L, R> applyFlatMapAsync<L, R>(
-    Future<Either<L, R>> Function(Right value) onRight,
-    Future<Either<L, R>> Function(Left value) onLeft,
-  ) {
-    return then((either) => either.fold(
-          (value) async => await onLeft(value),
-          (value) async => await onRight(value),
-        ));
-  }
-
-  AsyncEither<Right, Left> swap() {
-    return then((either) => either.swap());
   }
 }

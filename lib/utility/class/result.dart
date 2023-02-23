@@ -56,10 +56,6 @@ abstract class Result<Success> {
 
   Future<Result<V>> flatMapWithCatchAsync<V>(
       Future<Result<V>> Function(Success success) onSuccess);
-
-  AsyncResult<Success> asAsync() {
-    return Future.value(this);
-  }
 }
 
 extension ResultWithFutureExt<Value> on Result<Future<Value>> {
@@ -291,91 +287,5 @@ class _ResultFailure<Success> extends Result<Success> {
   Future<Result<V>> flatMapWithCatchAsync<V>(
       Future<Result<V>> Function(Success success) onSuccess) async {
     return Result.failure(error);
-  }
-}
-
-typedef AsyncResult<Success> = Future<Result<Success>>;
-
-extension AsyncResultExt<Success> on AsyncResult<Success> {
-  static AsyncResult<Success> fromTryCatch(
-      FutureOr<Success> Function() fn) async {
-    try {
-      return Result.success(await fn());
-    } on Exception catch (e) {
-      return Result.failure(e);
-    }
-  }
-
-  Future<bool> get isSuccess => then((result) => result.isSuccess);
-
-  Future<bool> get isFailure => then((result) => result.isFailure);
-
-  Future<Success> getSuccessOrThrow() {
-    return then((result) => result.getSuccessOrThrow());
-  }
-
-  Future<Success?> getSuccessOrNull() {
-    return then((result) => result.getSuccessOrNull());
-  }
-
-  Future<Success> getSuccessOrElse(
-      FutureOr<Success> Function(Exception error) onFailure) {
-    return then((result) => result.fold(
-        (success) async => success, (error) async => await onFailure(error)));
-  }
-
-  Future<Exception> getException() async {
-    return then((result) => result.getException());
-  }
-
-  Future<Exception> getExceptionOrThrowSuccess() {
-    return then((result) => result.getExceptionOrThrowSuccess());
-  }
-
-  Future<Exception?> getExceptionOrNull() {
-    return then((result) => result.getExceptionOrNull());
-  }
-
-  Future<V> fold<V>(
-    V Function(Success success) onSuccess,
-    V Function(Exception error) onFail,
-  ) async {
-    return then((result) => result.fold(onSuccess, onFail));
-  }
-
-  AsyncResult<V> map<V>(V Function(Success success) onSuccess) {
-    return then((result) => result.map(onSuccess));
-  }
-
-  AsyncResult<V> mapWithCatch<V>(V Function(Success success) onSuccess) {
-    return then((result) => result.mapWithCatch(onSuccess));
-  }
-
-  AsyncResult<V> mapAsync<V>(Future<V> Function(Success success) onSuccess) {
-    return then((result) => result.mapAsync(onSuccess));
-  }
-
-  AsyncResult<V> mapWithCatchAsync<V>(
-      Future<V> Function(Success success) onSuccess) {
-    return then((result) => result.mapWithCatchAsync(onSuccess));
-  }
-
-  AsyncResult<V> flatMap<V>(Result<V> Function(Success success) onSuccess) {
-    return then((result) => result.flatMap(onSuccess));
-  }
-
-  AsyncResult<V> flatMapWithCatch<V>(
-      Result<V> Function(Success success) onSuccess) {
-    return then((result) => result.flatMapWithCatch(onSuccess));
-  }
-
-  AsyncResult<V> flatMapAsync<V>(
-      Future<Result<V>> Function(Success success) onSuccess) {
-    return then((result) => result.flatMapAsync(onSuccess));
-  }
-
-  AsyncResult<V> flatMapWithCatchAsync<V>(
-      Future<Result<V>> Function(Success success) onSuccess) {
-    return then((result) => result.flatMapWithCatchAsync(onSuccess));
   }
 }
