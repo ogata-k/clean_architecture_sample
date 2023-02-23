@@ -92,7 +92,7 @@ class UserSearch extends ConsumerWidget {
             content: Text(errorMessage),
             actions: <Widget>[
               // ボタン領域
-              TextButton(
+              FlatButton(
                 child: Text("close"),
                 onPressed: () => Navigator.pop(context),
               ),
